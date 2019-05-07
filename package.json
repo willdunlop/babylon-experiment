@@ -1,0 +1,54 @@
+{
+  "name": "webpack-boilerplate",
+  "version": "1.0.0",
+  "author": "William Dunlop",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.4",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-istanbul": "^5.1.4",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.13.0",
+    "jsdom": "^15.0.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^6.1.4",
+    "nyc": "^14.1.0",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.0"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register",
+      "three"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "scripts": {
+    "build": "rm -rf ./build && npm run build-js && npm run build-css && cp -r ./src/_static/* ./build/",
+    "build-js": "node ./node_modules/webpack/bin/webpack.js -p",
+    "build-css": "node-sass src/style/main.scss -o src/_static/style",
+    "watch-css": "npm run build-css && node-sass src/style/main.scss -o build/style --watch --recursive",
+    "watch-js": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --progress --colors --inline",
+    "start": "npm-run-all -p watch-css watch-js",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text --report-dir=./test/coverage mocha -r jsdom-global/register"
+  },
+  "license": "ISC"
+}
